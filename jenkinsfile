@@ -20,4 +20,22 @@ pipeline {
                 }
     }
 }
+ stage('images to dockerhub') {
+            steps {
+                script{
+                    withCredentials([string(credentialsId: 'DavidDockerAntony', variable: 'demo_docker')]) {
+                        bat "docker login -u antonydavid96 -p${demo_docker}"
+                    }
+                    bat 'docker push antonydavid96/tomcat-application:1'
+}
+            }
+ }
+  stage('deploy') {
+            steps {
+                script{
+                    bat('docker -itd --name tomcat-application -p 80:80 aantonydavid96/tomcat-application:1')
+    }
+}
+  }
+    }
 }
