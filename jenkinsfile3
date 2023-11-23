@@ -30,8 +30,12 @@ pipeline {
 }
             }
  }
-stage('Deploy') {
+  stage('deploy') {
             steps {
-                bat 'kubectl apply -f deployment.yml'
+                script{
+                    bat('docker run -itd --name anto -p 80:80 antonydavid96/tomcat-application:1')
+    }
+}
+  }
     }
 }
