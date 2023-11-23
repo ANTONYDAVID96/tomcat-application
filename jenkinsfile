@@ -35,3 +35,5 @@ stage('Deploy') {
                 bat 'kubectl apply -f deployment.yml'
     }
 }
+    }
+}
