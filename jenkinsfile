@@ -9,14 +9,14 @@ pipeline {
         }
         stage('build') {
             steps {
-                bat 'mvn clean'
-                bat 'mvn install'
+                sh 'mvn clean'
+                sh 'mvn install'
             }
         }
         stage('images') {
             steps {
                 script{
-                    bat 'docker build -t antonydavid96/tomcat-application:1 .'
+                    sh 'docker build -t antonydavid96/tomcat-application:1 .'
                 }
     }
 }
@@ -24,15 +24,15 @@ pipeline {
             steps {
                 script{
                     withCredentials([string(credentialsId: 'DavidDockerAntony', variable: 'demo_docker')]) {
-                        bat "docker login -u antonydavid96 -p ${demo_docker}"
+                        sh "docker login -u antonydavid96 -p ${demo_docker}"
                     }
-                    bat 'docker push antonydavid96/tomcat-application:1'
+                    sh 'docker push antonydavid96/tomcat-application:1'
 }
             }
  }
 stage('Deploy') {
             steps {
-                bat 'kubectl apply -f deployment.yml'
+                sh 'kubectl apply -f deployment.yml'
     }
 }
     }
